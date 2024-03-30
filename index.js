@@ -9,15 +9,18 @@ const ulEl = document.getElementById("ul-el");
 const delBtn = document.getElementById("delete-btn")
 const tabBtn = document.getElementById("tab-btn");
 
-const tabs = [
-    {url: "https://www.linkedin.com/in/per-harald-borgen/"}
-]
 
 tabBtn.addEventListener("click", saveTab);
 
 function saveTab(event){
     event.preventDefault();
-    console.log(tabs[0].url)
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        myLeads.push(tabs[0].url)
+        localStorage.setItem("myLeads", JSON.stringify(myLeads) )
+        render(myLeads)
+    })
+    
+    
 }
 
 delBtn.addEventListener("dblclick", cleanLeads);
